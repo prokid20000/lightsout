@@ -29,29 +29,49 @@ import "./Board.css";
 
 function Board({ nrows = 5, ncols = 5, chanceLightStartsOn }) {
   const [board, setBoard] = useState(createBoard());
+  
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
     let initialBoard = [];
+    
+    
     // TODO: create array-of-arrays of true/false values
     for (let i =0; i < ncols; i++){
       initialBoard.push([]);
     }
     initialBoard.map(col => {
       for(let r = 0; r < nrows; r++){
-        col.push(false);
+        let initialState = Math.floor(Math.random() * 2);
+        if(initialState === 0){
+          col.push(false);
+        }
+        else{
+          col.push(true);
+        }
+       
       }
     });
 
-
-
     return initialBoard;
   }
+
+  /**  */
+  // function setUpBoard() {
+  //   for(let n =0; n < 3; n++){
+  //     let row = Math.floor(Math.random() * nrows);
+  //     let col = Math.floor(Math.random() * ncols);
+      
+  //     flipCellsAround(`${row}-${col}`);
+  //   }
+  
 
   function hasWon() {
     // TODO: check the board in state to determine whether the player has won.
     return board.every(row => row.every(cell => !cell));
   }
+
+
 
   function flipCellsAround(coord) {
     setBoard(oldBoard => {
@@ -89,9 +109,11 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn }) {
 
   // make table board
 
+
   return(
     <table className="LightsOut-Board">
-      {
+
+      { !hasWon() &&
         board.map((row, rIdx) =>(
           <tr>{row.map((col, cIdx) => (
               <Cell
@@ -102,6 +124,7 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn }) {
           </tr>
         ))
       }
+      {hasWon() && "you win!"}
     </table>
   );
 
