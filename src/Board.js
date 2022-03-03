@@ -43,8 +43,8 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn }) {
       }
     });
 
-    
-    
+
+
     return initialBoard;
   }
 
@@ -67,9 +67,19 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn }) {
 
       // TODO: Make a (deep) copy of the oldBoard
 
+      const newBoard = oldBoard.map(row => [...row]);
+
       // TODO: in the copy, flip this cell and the cells around it
 
+      flipCell(y, x, newBoard);
+      flipCell(y-1, x, newBoard);
+      flipCell(y+1, x, newBoard);
+      flipCell(y, x-1, newBoard);
+      flipCell(y, x+1, newBoard);
+
       // TODO: return the copy
+      return newBoard;
+
     });
   }
 
@@ -78,6 +88,22 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn }) {
   // TODO
 
   // make table board
+
+  return(
+    <table className="LightsOut-Board">
+      {
+        board.map((row, rIdx) =>(
+          <tr>{row.map((col, cIdx) => (
+              <Cell
+                flipCellsAroundMe={() => flipCellsAround(`${rIdx}-${cIdx}`)}
+                isLit={col}/>
+              ))
+            }
+          </tr>
+        ))
+      }
+    </table>
+  );
 
   // TODO
 }
