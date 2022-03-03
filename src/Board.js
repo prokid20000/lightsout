@@ -109,7 +109,7 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn }) {
 
   // make table board
 
-
+ 
   return(
     <table className="LightsOut-Board">
 
